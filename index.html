@@ -266,17 +266,17 @@ html, body {
 .concept-bar {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   background: var(--white);
   border: 1px solid var(--border);
-  border-left: 4px solid var(--orange);
-  border-radius: 10px;
-  padding: 16px 22px;
-  margin-bottom: 32px;
+  border-left: 5px solid var(--orange); /* Un poquito más grueso para acompañar el tamaño */
+  border-radius: 12px;
+  padding: 22px 28px; /* Aumentado de 16px 22px para que sea más imponente */
+  margin-bottom: 36px;
 }
 
 .concept-bar p {
-  font-size: 14px;
+  font-size: 15px; /* Subió de 14px a 15px para mejorar lectura */
   color: var(--text);
   line-height: 1.6;
 }
@@ -286,26 +286,26 @@ html, body {
 .feat-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: 20px; /* Más separación entre las cards */
 }
 
 .feat-card {
   background: var(--white);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 22px 24px;
+  border-radius: 14px;
+  padding: 28px 30px; /* Aumentado de 22px 24px para darles mayor cuerpo y aire */
   display: flex;
-  gap: 16px;
+  gap: 20px; /* Más espacio entre el icono y los textos */
   align-items: flex-start;
   transition: box-shadow .2s;
 }
 
-.feat-card:hover { box-shadow: 0 4px 20px rgba(35,38,79,.08); }
+.feat-card:hover { box-shadow: 0 6px 24px rgba(35,38,79,.08); }
 
 .feat-icon-wrap {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
+  width: 52px;  /* Aumentado de 44px a 52px para equilibrar la tarjeta */
+  height: 52px; /* Aumentado de 44px a 52px */
+  border-radius: 12px;
   background: var(--bg);
   border: 1px solid var(--border);
   display: flex;
@@ -314,16 +314,20 @@ html, body {
   flex-shrink: 0;
 }
 
-.feat-icon-wrap i { color: var(--slate); font-size: 20px; }
+.feat-icon-wrap i { color: var(--slate); font-size: 24px; } /* Icono sutilmente más grande */
 
 .feat-card h3 {
-  font-size: 14px;
+  font-size: 15px; /* Subió de 14px a 15px */
   font-weight: 700;
   color: var(--navy);
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
-.feat-card p { font-size: 12px; color: var(--muted); line-height: 1.6; }
+.feat-card p { 
+  font-size: 13px; /* Subió de 12px a 13px */
+  color: var(--muted); 
+  line-height: 1.6; 
+}
 
 /* ═══════════════════════════════════════
    SLIDE 3 – PROBLEMA & SOLUCIÓN
@@ -333,12 +337,12 @@ html, body {
 .compare-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  gap: 32px; /* Aumentado de 24px a 32px para separar más ambos lados */
 }
 
 .compare-col {
-  border-radius: 14px;
-  padding: 28px;
+  border-radius: 16px; /* Bordes sutilmente más redondeados */
+  padding: 34px 32px; /* Aumentado de 28px para darles mucho más aire por dentro */
   border: 1px solid var(--border);
 }
 
@@ -355,14 +359,14 @@ html, body {
 .compare-col-label {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 22px;
+  gap: 12px;
+  margin-bottom: 26px; /* Más espacio debajo del título principal */
 }
 
 .compare-col-label .badge {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: 38px;  /* Aumentado de 32px a 38px para que resalte más el ícono */
+  height: 38px; /* Aumentado de 32px a 38px */
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -370,35 +374,41 @@ html, body {
 
 .pain .badge { background: #fee2e2; }
 .solve .badge { background: #dcfce7; }
-.pain .badge i { color: #dc2626; font-size: 16px; }
-.solve .badge i { color: #16a34a; font-size: 16px; }
+.pain .badge i { color: #dc2626; font-size: 18px; }  /* Ícono sutilmente más grande */
+.solve .badge i { color: #16a34a; font-size: 18px; } /* Ícono sutilmente más grande */
 
 .compare-col-label h3 {
-  font-size: 15px;
+  font-size: 16px; /* Subió de 15px a 16px */
   font-weight: 700;
 }
 
 .pain .compare-col-label h3 { color: #991b1b; }
 .solve .compare-col-label h3 { color: #14532d; }
 
-.compare-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.compare-list { 
+  list-style: none; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 16px; /* Más separación entre cada ítem de la lista */
+}
 
 .compare-list li {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-size: 13px;
-  line-height: 1.55;
+  font-size: 14px;
+  line-height: 1.6;
   color: var(--text);
+  padding-left: 18px;
+  position: relative;
 }
 
 .compare-list li::before {
   content: '';
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   flex-shrink: 0;
-  margin-top: 6px;
+  position: absolute;
+  left: 0;
+  top: 8px;
 }
 
 .pain .compare-list li::before { background: #dc2626; }
@@ -716,8 +726,7 @@ html, body {
       </div>
     </div>
 
-    <!-- ════ SLIDE 3 – PROBLEMA & SOLUCIÓN ════ -->
-    <div class="slide s3">
+<div class="slide s3">
       <div class="section-wrap">
         <p class="section-label">03 — Propuesta de Valor</p>
         <h2 class="section-title">El problema que resolvemos</h2>
@@ -730,10 +739,10 @@ html, body {
               <h3>El problema actual</h3>
             </div>
             <ul class="compare-list">
-              <li>Enviar un técnico físicamente solo para desenchufar y volver a enchufar un equipo.</li>
-              <li>Sin visibilidad del consumo eléctrico ni alertas de sobrecarga en tiempo real.</li>
-              <li>Altos costos operativos por cada caída de servicio en sucursales remotas.</li>
-              <li>Equipos importados equivalentes cuestan entre 5× y 10× más que SmartRACK.</li>
+              <li>Enviar un técnico <strong>físicamente</strong> solo para <strong>desenchufar y volver</strong> a enchufar un equipo.</li>
+              <li><strong>Sin visibilidad</strong> del consumo eléctrico ni alertas de sobrecarga en tiempo real.</li>
+              <li><strong>Altos costos</strong> operativos por cada caída de servicio en sucursales remotas.</li>
+              <li>Equipos <strong>importados</strong> equivalentes <strong>cuestan</strong> entre <strong>5×</strong> y <strong>10×</strong> más que SmartRACK.</li>
             </ul>
           </div>
           <div class="compare-col solve">
@@ -742,10 +751,10 @@ html, body {
               <h3>La solución SmartRACK</h3>
             </div>
             <ul class="compare-list">
-              <li>Reboot remoto desde cualquier navegador en segundos, sin enviar técnicos.</li>
-              <li>Monitoreo predictivo del consumo con alertas automáticas ante desvíos.</li>
-              <li>Operación autónoma sin internet: buffer offline y control local garantizados.</li>
-              <li>Alternativa nacional de hardware abierto y firmware propio, a precio accesible.</li>
+              <li>Reboot <strong>remoto</strong> desde cualquier navegador en segundos, sin enviar técnicos.</li>
+              <li><strong>Monitoreo predictivo</strong> del consumo con alertas automáticas ante desvíos.</li>
+              <li>Operación autónoma <strong>sin internet</strong>: buffer offline y control local garantizados.</li>
+              <li>Alternativa <strong>nacional</strong> de hardware abierto y firmware propio, a precio accesible.</li>
             </ul>
           </div>
         </div>
