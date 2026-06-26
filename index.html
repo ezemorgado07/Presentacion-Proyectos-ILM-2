@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartRACK – ePDU Autónoma</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #23264f;
+  --orange: #f49825;
+  --slate: #5f7dbe;
+  --white: #ffffff;
+  --bg: #f4f6fb;
+  --bg2: #eef0f7;
+  --text: #1a1c2e;
+  --muted: #6b7280;
+  --light-muted: #9ca3af;
+  --border: #e5e7eb;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Montserrat', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+}
+
+/* ── SHELL ── */
+.shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* ── NAVBAR ── */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 60px;
+  height: 68px;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 10;
+}
+
+.navbar-logo-placeholder {
+  width: 100px;
+  height: 36px;
+  background: #e5e7eb;
+  border-radius: 6px;
+}
+
+.navbar-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.slide-counter {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: .08em;
+}
+
+/* ── SLIDE DECK ── */
+.deck {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.slide {
+  display: none;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  animation: fadeUp .38s ease;
+}
+
+.slide.active { display: block; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── FOOTER NAV ── */
+.footer-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 60px;
+  height: 64px;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.btn-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 22px;
+  border-radius: 8px;
+  border: 1.5px solid var(--navy);
+  background: transparent;
+  color: var(--navy);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .18s, color .18s;
+}
+
+.btn-nav:hover:not(:disabled) {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.btn-nav:disabled { opacity: .3; cursor: not-allowed; }
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d1d5db;
+  cursor: pointer;
+  transition: all .22s;
+}
+
+.dot.active {
+  background: var(--orange);
+  width: 24px;
+  border-radius: 4px;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE 1 – HERO
+══════════════════════════════════════════ */
+.s1 {
+  background: var(--white);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 80px;
+  gap: 0;
+  display: none; /* Nos aseguramos de que por defecto esté oculta como las demás */
+}
+
+/* Le decimos que SOLO muestre su formato flex cuando la diapositiva esté activa */
+.s1.active {
+  display: flex;
+}
+
+.s1-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--slate);
+  margin-bottom: 28px;
+}
+
+.s1-title {
+  font-size: clamp(56px, 8vw, 90px);
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1;
+  letter-spacing: -.02em;
+  margin-bottom: 20px;
+}
+
+.s1-title .accent { color: var(--orange); }
+
+.s1-divider {
+  width: 60px;
+  height: 3px;
+  background: var(--orange);
+  border-radius: 2px;
+  margin: 0 auto 24px;
+}
+
+.s1-sub {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 520px;
+  margin: 0 auto 40px;
+}
+
+.s1-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border-radius: 100px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.s1-pill span { color: var(--navy); }
+
+/* ═══════════════════════════════════════
+   SHARED SECTION STYLES
+══════════════════════════════════════════ */
+.section-wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 52px 60px;
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--slate);
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+  line-height: 1.15;
+}
+
+.section-sub {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE 2 – CÓMO FUNCIONA
+══════════════════════════════════════════ */
+.s2 { background: var(--bg); }
+
+.concept-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--orange);
+  border-radius: 10px;
+  padding: 16px 22px;
+  margin-bottom: 32px;
+}
+
+.concept-bar p {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.concept-bar strong { color: var(--orange); font-weight: 700; }
+
+.feat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.feat-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px 24px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  transition: box-shadow .2s;
+}
+
+.feat-card:hover { box-shadow: 0 4px 20px rgba(35,38,79,.08); }
+
+.feat-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.feat-icon-wrap i { color: var(--slate); font-size: 20px; }
+
+.feat-card h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+
+.feat-card p { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+/* ═══════════════════════════════════════
+   SLIDE 3 – PROBLEMA & SOLUCIÓN
+══════════════════════════════════════════ */
+.s3 { background: var(--white); }
+
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.compare-col {
+  border-radius: 14px;
+  padding: 28px;
+  border: 1px solid var(--border);
+}
+
+.compare-col.pain {
+  background: #fff8f8;
+  border-color: #fcd0d0;
+}
+
+.compare-col.solve {
+  background: #f8fff9;
+  border-color: #b8e8c4;
+}
+
+.compare-col-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.compare-col-label .badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pain .badge { background: #fee2e2; }
+.solve .badge { background: #dcfce7; }
+.pain .badge i { color: #dc2626; font-size: 16px; }
+.solve .badge i { color: #16a34a; font-size: 16px; }
+
+.compare-col-label h3 {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.pain .compare-col-label h3 { color: #991b1b; }
+.solve .compare-col-label h3 { color: #14532d; }
+
+.compare-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+
+.compare-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+.compare-list li::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+.pain .compare-list li::before { background: #dc2626; }
+.solve .compare-list li::before { background: #16a34a; }
+
+/* ═══════════════════════════════════════
+   SLIDE 4 – TIMELINE
+══════════════════════════════════════════ */
+.s4 { background: var(--bg); }
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  padding-left: 48px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 20px;
+  bottom: 20px;
+  width: 2px;
+  background: var(--border);
+}
+
+.tl-item {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+  position: relative;
+  padding-bottom: 32px;
+}
+
+.tl-item:last-child { padding-bottom: 0; }
+
+.tl-dot-wrap {
+  position: absolute;
+  left: -48px;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tl-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.tl-dot.done { background: var(--navy); color: var(--white); }
+.tl-dot.done i { font-size: 16px; }
+.tl-dot.active-step { background: var(--orange); color: var(--white); }
+.tl-dot.active-step i { font-size: 16px; }
+
+.tl-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  flex: 1;
+}
+
+.tl-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.tl-card h3 { font-size: 15px; font-weight: 700; color: var(--navy); }
+
+.tl-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 12px;
+  border-radius: 100px;
+}
+
+.tl-badge.done { background: #dcfce7; color: #14532d; }
+.tl-badge.ongoing { background: #fff7ed; color: #92400e; }
+
+.tl-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+.tl-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.tl-tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--slate);
+  border: 1px solid var(--border);
+}
+
+/* ═══════════════════════════════════════
+   SLIDE 5 – EQUIPO
+══════════════════════════════════════════ */
+.s5 { background: var(--white); }
+
+.s5 .section-wrap { padding-top: 42px; padding-bottom: 42px; }
+
+.team-section-label {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--slate);
+  margin-bottom: 20px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.team-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 26px 20px 24px;
+  width: 170px;
+  transition: box-shadow .2s;
+}
+
+.profile-card:hover { box-shadow: 0 4px 18px rgba(35,38,79,.09); }
+
+.avatar-circle {
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  background: #dde1ee;
+  margin-bottom: 16px;
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-circle i { color: var(--slate); font-size: 24px; }
+
+.profile-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+
+.profile-role {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.partner-group {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 10px; /* Antes era 22px 26px. Achicamos los bordes internos para ganar ancho */
+}
+
+.partner-group-title {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--slate);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.partner-group-title i { font-size: 18px; }
+
+.partner-persons { display: flex; flex-direction: column; gap: 8px; }
+
+.mini-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left; /* Obliga a que los textos largos se mantengan prolijos a la izquierda */
+}
+
+.mini-avatar {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #dde1ee;
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mini-avatar i { color: var(--slate); font-size: 16px; }
+
+.mini-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.mini-label {
+  font-size: 12px;
+  color: var(--muted);
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ── TOP NAVBAR ── -->
+  <nav class="navbar">
+    <!-- aca va la imagen de aucatek -->
+    <img src="aucatek.png" alt="Logo AucaTek" style="width:200px; height:100px; object-fit: contain;">
+    <!-- fin placeholder aucatek -->
+
+    <div class="navbar-center">
+      <span class="slide-counter" id="counterLabel">1 / 5</span>
+    </div>
+
+    <!-- aca va la imagen del colegio -->
+    <img src="murialdo.png" alt="Logo Murialdo" style="width:200px; height:65px; object-fit: contain;">
+    <!-- fin placeholder colegio -->
+  </nav>
+
+  <!-- ── DECK ── -->
+  <div class="deck">
+
+    <!-- ════ SLIDE 1 – HERO ════ -->
+    <div class="slide s1 active">
+      <p class="s1-eyebrow">Proyecto Interdisciplinario · Instituto Leonardo Murialdo</p>
+      <h1 class="s1-title">Smart<span class="accent">RACK</span></h1>
+      <div class="s1-divider"></div>
+      <p class="s1-sub">ePDU Autónoma — Gestión inteligente de energía para Centros de Datos.</p>
+    </div>
+
+    <!-- ════ SLIDE 2 – CÓMO FUNCIONA ════ -->
+    <div class="slide s2">
+      <div class="section-wrap">
+        <p class="section-label">02 — Tecnología</p>
+        <h2 class="section-title">¿Cómo funciona?</h2>
+        <p class="section-sub">Una zapatilla con inteligencia embebida que actúa como el cerebro del rack.</p>
+
+        <div class="concept-bar">
+          <i class="ti ti-cpu" aria-hidden="true" style="color:var(--orange);font-size:26px;flex-shrink:0"></i>
+          <p>SmartRACK es una <strong>ePDU local-first</strong>: conecta hasta 5 equipos del rack y les entrega control, visibilidad y resiliencia — todo por cable Ethernet.</p>
+        </div>
+
+        <div class="feat-grid">
+          <div class="feat-card">
+            <div class="feat-icon-wrap"><i class="ti ti-toggle-right" aria-hidden="true"></i></div>
+            <div>
+              <h3>Control por toma</h3>
+              <p>ON/OFF, reboot y secuenciación individual en cada uno de los 5 tomacorrientes desde cualquier navegador.</p>
+            </div>
+          </div>
+          <div class="feat-card">
+            <div class="feat-icon-wrap"><i class="ti ti-chart-line" aria-hidden="true"></i></div>
+            <div>
+              <h3>Medición en tiempo real</h3>
+              <p>Voltaje, corriente, potencia, factor de potencia y consumo acumulado (kWh) vía sensor PZEM-004T.</p>
+            </div>
+          </div>
+          <div class="feat-card">
+            <div class="feat-icon-wrap"><i class="ti ti-network" aria-hidden="true"></i></div>
+            <div>
+              <h3>Ethernet cableado</h3>
+              <p>DHCP o IP estática via ENC28J60. Sin Wi-Fi, sin interferencias — ideal para entornos de misión crítica.</p>
+            </div>
+          </div>
+          <div class="feat-card">
+            <div class="feat-icon-wrap"><i class="ti ti-device-desktop" aria-hidden="true"></i></div>
+            <div>
+              <h3>Panel web local-first</h3>
+              <p>Opera aunque se caiga internet. Buffer offline garantiza que no se pierdan datos ni comandos.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ SLIDE 3 – PROBLEMA & SOLUCIÓN ════ -->
+    <div class="slide s3">
+      <div class="section-wrap">
+        <p class="section-label">03 — Propuesta de Valor</p>
+        <h2 class="section-title">El problema que resolvemos</h2>
+        <p class="section-sub">Hoy, reiniciar un equipo remoto puede costar días y miles de pesos.</p>
+
+        <div class="compare-grid">
+          <div class="compare-col pain">
+            <div class="compare-col-label">
+              <div class="badge"><i class="ti ti-alert-triangle" aria-hidden="true"></i></div>
+              <h3>El problema actual</h3>
+            </div>
+            <ul class="compare-list">
+              <li>Enviar un técnico físicamente solo para desenchufar y volver a enchufar un equipo.</li>
+              <li>Sin visibilidad del consumo eléctrico ni alertas de sobrecarga en tiempo real.</li>
+              <li>Altos costos operativos por cada caída de servicio en sucursales remotas.</li>
+              <li>Equipos importados equivalentes cuestan entre 5× y 10× más que SmartRACK.</li>
+            </ul>
+          </div>
+          <div class="compare-col solve">
+            <div class="compare-col-label">
+              <div class="badge"><i class="ti ti-circle-check" aria-hidden="true"></i></div>
+              <h3>La solución SmartRACK</h3>
+            </div>
+            <ul class="compare-list">
+              <li>Reboot remoto desde cualquier navegador en segundos, sin enviar técnicos.</li>
+              <li>Monitoreo predictivo del consumo con alertas automáticas ante desvíos.</li>
+              <li>Operación autónoma sin internet: buffer offline y control local garantizados.</li>
+              <li>Alternativa nacional de hardware abierto y firmware propio, a precio accesible.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ SLIDE 4 – TIMELINE ════ -->
+    <div class="slide s4">
+      <div class="section-wrap">
+        <p class="section-label">04 — Estado del Proyecto</p>
+        <h2 class="section-title">Avances del proyecto</h2>
+        <p class="section-sub">Seguimiento de hitos y etapas.</p>
+
+        <div class="timeline">
+
+          <div class="tl-item">
+            <div class="tl-dot-wrap">
+              <div class="tl-dot done"><i class="ti ti-check" aria-hidden="true"></i></div>
+            </div>
+            <div class="tl-card">
+              <div class="tl-card-top">
+                <h3>Relevamiento completado</h3>
+                <span class="tl-badge done">✓ Aprobado</span>
+              </div>
+              <p>Entrevistas y levantamiento de requerimientos finalizados con el cliente. Casos de uso, alcance MVP y criterios de aceptación validados.</p>
+              <div class="tl-tags">
+                <span class="tl-tag">Semanas 0–2</span>
+                <span class="tl-tag">Requerimientos</span>
+                <span class="tl-tag">Casos de uso</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot-wrap">
+              <div class="tl-dot done"><i class="ti ti-check" aria-hidden="true"></i></div>
+            </div>
+            <div class="tl-card">
+              <div class="tl-card-top">
+                <h3>Validación de Diseño UX/UI</h3>
+                <span class="tl-badge done">✓ Aprobado</span>
+              </div>
+              <p>Mockup funcional del portal operativo diseñado, iterado y validado con el cliente y con su departamento de imágen y diseño. Identidad visual, flujos de usuario y sistema de design aprobados.</p>
+              <div class="tl-tags">
+                <span class="tl-tag">Semanas 2–3</span>
+                <span class="tl-tag">Mockups</span>
+                <span class="tl-tag">Design System</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot-wrap">
+              <div class="tl-dot active-step"><i class="ti ti-settings" aria-hidden="true"></i></div>
+            </div>
+            <div class="tl-card" style="border-color:var(--orange);border-left:3px solid var(--orange)">
+              <div class="tl-card-top">
+                <h3>Ingeniería en curso</h3>
+                <span class="tl-badge ongoing">En curso</span>
+              </div>
+              <p>Arquitectura de hardware y firmware definida. Integración ESP 03 Mini + ENC28J60 (Ethernet SPI) + PZEM-004T para medición de energía. Control de 5 relés en fase con protecciones EMI/MOV/NTC.</p>
+              <div class="tl-tags">
+                <span class="tl-tag">Semanas 4–6</span>
+                <span class="tl-tag">ESP 03 MINI</span>
+                <span class="tl-tag">PZEM-004T</span>
+                <span class="tl-tag">5 Relés</span>
+                <span class="tl-tag">Firmware</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+   <!-- ════ SLIDE 5 – EQUIPO ════ -->
+    <div class="slide s5">
+      <!-- Le damos más ancho a esta diapositiva para que entren las 4 columnas cómodas -->
+      <div class="section-wrap" style="text-align: center; max-width: 1200px; width: 96%; margin: 0 auto;">
+        <p class="section-label">05 — Personas</p>
+        <h2 class="section-title">Equipo y partners estratégicos</h2>
+        <p class="section-sub">Equipo interdisciplinario del Instituto Leonardo Murialdo.</p>
+
+        <div class="team-section-label" style="text-align: left;">Equipo core</div>
+        <div class="team-grid" style="justify-content: center;">
+
+          <div class="profile-card">
+            <div class="avatar-circle">
+              <img src="ezequiel.png" alt="Ezequiel Morgado" style="width: 100%; height: 100%; object-fit: cover; object-position: center 40%;">
+            </div>
+            <div class="profile-name">Ezequiel Morgado</div>
+            <div class="profile-role">Project Manager & Developer Backend</div>
+          </div>
+
+          <div class="profile-card">
+            <div class="avatar-circle">
+              <img src="camilo.png" alt="Camilo Spinelli" style="width: 100%; height: 100%; object-fit: cover; object-position: center 20%;">
+            </div>
+            <div class="profile-name">Camilo Spinelli</div>
+            <div class="profile-role">Developer Firmware</div>
+          </div>
+
+          <div class="profile-card">
+            <div class="avatar-circle">
+              <img src="sofia.png" alt="Sofía Hermosilla" style="width: 100%; height: 100%; object-fit: cover; object-position: center 40%;">
+            </div>
+            <div class="profile-name">Sofía Hermosilla</div>
+            <div class="profile-role">Developer Frontend & UX/UI</div>
+          </div>
+
+          <div class="profile-card">
+            <div class="avatar-circle">
+              <img src="violeta.png" alt="Violeta Martini" style="width: 100%; height: 100%; object-fit: cover; object-position: center 20%;">
+            </div>
+            <div class="profile-name">Violeta Martini</div>
+            <div class="profile-role">Developer CAD</div>
+          </div>
+        </div>
+
+        <div class="team-section-label" style="margin-top:8px; text-align: left;">Partners estratégicos</div>
+        
+        <!-- Aplicamos display: grid en 4 columnas estiradas -->
+        <div class="partners-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; align-items: stretch;">
+
+          <div class="partner-group">
+            <div class="partner-group-title">
+              <i class="ti ti-cpu" aria-hidden="true"></i>Electrónica
+            </div>
+            <div class="partner-persons">
+              <div class="mini-profile">
+                <div class="mini-avatar">
+                  <img src="villarosa.png" alt="Santiago Villarosa" style="width: 100%; height: 100%; object-fit: cover; object-position: center 40%;">
+                </div>
+                <div>
+                  <div class="mini-name">Santiago Villarosa</div>
+                  <div class="mini-label">Especialista en Hardware</div>
+                </div>
+              </div>
+              <div class="mini-profile">
+                <div class="mini-avatar">
+                  <img src="sparta.png" alt="Federico Sparta" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+                </div>
+                <div>
+                  <div class="mini-name">Federico Sparta</div>
+                  <div class="mini-label">Especialista en Potencia y Seguridad</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="partner-group">
+            <div class="partner-group-title">
+              <i class="ti ti-video" aria-hidden="true"></i>Multimedios
+            </div>
+            <div class="partner-persons">
+              <div class="mini-profile">
+                <div class="mini-avatar">
+                  <img src="marticorena.png" alt="Ignacio Marticorena" style="width: 100%; height: 100%; object-fit: cover; object-position: center 25%;">
+                </div>
+                <div>
+                  <div class="mini-name">Ignacio Marticorena</div>
+                  <div class="mini-label">Identidad Visual y Branding del producto</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="partner-group">
+            <div class="partner-group-title">
+              <i class="ti ti-briefcase" aria-hidden="true"></i>Administración
+            </div>
+            <div class="partner-persons">
+              <div class="mini-profile">
+                <div class="mini-avatar">
+                  <img src="cusato.png" alt="Santiago Cusato" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+                </div>
+                <div>
+                  <div class="mini-name">Santiago Cusato</div>
+                  <div class="mini-label">Gestión de costos y suministros</div>
+                </div>
+              </div>
+              <div class="mini-profile">
+                <div class="mini-avatar">
+                  <img src="cala.png" alt="Catalina La Regina" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+                </div>
+                <div>
+                  <div class="mini-name">Catalina La Regina</div>
+                  <div class="mini-label">Marco Legal, comercial y Relación con el cliente</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="partner-group">
+            <div class="partner-group-title">
+              <i class="ti ti-book" aria-hidden="true"></i>Tutoría
+            </div>
+            <div class="partner-persons">
+              <div class="mini-profile">
+                <div class="mini-avatar">
+                  <img src="martin.png" alt="Martín" style="width: 100%; height: 100%; object-fit: cover; object-position: center 20%;">
+                </div>
+                <div>
+                  <div class="mini-name">Martín Barral</div>
+                  <div class="mini-label">Tutor Técnico del proyecto</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div><!-- /deck -->
+
+  <!-- ── FOOTER NAV ── -->
+  <footer class="footer-nav">
+    <button class="btn-nav" id="prevBtn" onclick="go(-1)" disabled>
+      <i class="ti ti-arrow-left" aria-hidden="true"></i> Anterior
+    </button>
+    <div class="dots" id="dots"></div>
+    <button class="btn-nav" id="nextBtn" onclick="go(1)">
+      Siguiente <i class="ti ti-arrow-right" aria-hidden="true"></i>
+    </button>
+  </footer>
+
+</div><!-- /shell -->
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const dotsEl = document.getElementById('dots');
+const counter = document.getElementById('counterLabel');
+let cur = 0;
+
+slides.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.onclick = () => goTo(i);
+  dotsEl.appendChild(d);
+});
+
+function goTo(n) {
+  slides[cur].classList.remove('active');
+  document.querySelectorAll('.dot')[cur].classList.remove('active');
+  cur = n;
+  slides[cur].classList.add('active');
+  document.querySelectorAll('.dot')[cur].classList.add('active');
+  counter.textContent = (cur + 1) + ' / ' + slides.length;
+  document.getElementById('prevBtn').disabled = cur === 0;
+  document.getElementById('nextBtn').disabled = cur === slides.length - 1;
+}
+
+function go(d) {
+  if (cur + d >= 0 && cur + d < slides.length) goTo(cur + d);
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   go(-1);
+});
+</script>
+
+</body>
+</html>
